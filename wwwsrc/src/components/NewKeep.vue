@@ -53,6 +53,7 @@
                 ></textarea>
               </div>
               <div class="form-group text-left">
+                <label for="newKeepImg">Keep Image</label>
                 <input
                   v-model="newKeep.img"
                   type="text"
@@ -108,7 +109,7 @@ export default {
       },
       methods: {
         addKeep() {
-          $("#newKeep").modal("hide");
+          $("#newKeepForm").modal("hide");
           let keep = { ...this.newKeep };
           this.$store.dispatch("addKeep", keep);
           this.newKeep.name = "";

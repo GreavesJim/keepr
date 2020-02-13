@@ -28,6 +28,9 @@ export default new Vuex.Store({
     },
     setResource(state, payload) {
       state[payload.name] = payload.data;
+    },
+    addUserKeep(state, payload) {
+      state.yourKeeps.push(payload);
     }
   },
   actions: {
@@ -71,6 +74,10 @@ export default new Vuex.Store({
     async deleteVault({ commit, dispatch }, vaultData) {
       await api.delete("vaults/" + vaultData.id);
       dispatch("getYourVaults");
+    },
+    async addKeep({ commit, dispatch }, keep) {
+      let res = await api.post("keeps");
+      commit("addUserKeep", res.data);
     }
   }
 });
