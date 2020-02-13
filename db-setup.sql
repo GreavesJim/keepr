@@ -1,4 +1,4 @@
--- USE keepr13;
+USE keeprcodeworks;
 
 -- CREATE TABLE vaults (
 --     id int NOT NULL AUTO_INCREMENT,
@@ -43,7 +43,10 @@
 -- )
 
 
--- -- USE THIS LINE FOR GET KEEPS BY VAULTID
+-- DELETE FROM vaults
+
+
+-- USE THIS LINE FOR GET KEEPS BY VAULTID
 -- SELECT k.* FROM vaultkeeps vk
 -- INNER JOIN keeps k ON k.id = vk.keepId 
 -- WHERE (vaultId = @vaultId AND vk.userId = @userId) 
