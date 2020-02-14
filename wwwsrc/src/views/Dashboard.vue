@@ -10,6 +10,10 @@
         <h4>make a new Keep</h4>
         <new-keep></new-keep>
       </div>
+      <div class="col">
+        <h4>make a new Vault</h4>
+        <new-vault></new-vault>
+      </div>
     </div>
     <div class="row">
       <div class="col">
@@ -24,6 +28,7 @@
 <script>
 import VaultsSticker from "@/components/VaultsSticker.vue";
 import NewKeep from "@/components/NewKeep.vue";
+import NewVault from "@/components/NewVault.vue";
 export default {
   name: "dashboard",
   computed: {
@@ -38,11 +43,13 @@ export default {
   methods: {
     logout() {
       this.$store.dispatch("logout");
-    }
+    },
+    newKeepr() {}
   },
   components: {
     VaultsSticker,
-    NewKeep
+    NewKeep,
+    NewVault
   }
 };
 </script>

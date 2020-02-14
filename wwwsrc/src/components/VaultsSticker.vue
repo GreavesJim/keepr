@@ -5,6 +5,12 @@
         <h5 class="card-title text-wrap">{{ vaultData.name }}</h5>
         <p class="card-text text-left text-wrap">{{ vaultData.description }}</p>
       </div>
+      <div>
+        <router-link :to="{name: 'VaultView', params: { id: vaultData.id} }">
+          <!-- <button @click.prevent="viewKeeps(vaultData.id)">View Keeps</button> -->
+          <p>View Keeps</p>
+        </router-link>
+      </div>
       <button @click.prevent="deleteVault(vaultData)">X</button>
     </div>
   </div>
@@ -23,6 +29,9 @@ export default {
     deleteVault(vaultData) {
       this.$store.dispatch("deleteVault", vaultData);
     }
+    // viewKeeps(vaultData) {
+    //   this.$store.dispatch("viewVault", vaultData);
+    // }
   }
 };
 </script>

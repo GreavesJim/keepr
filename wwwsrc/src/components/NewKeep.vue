@@ -29,12 +29,12 @@
             </button>
           </div>
 
-          <form @submit.prevent="addKeep">
+          <form @submit.prevent="createKeep">
             <div class="modal-body">
               <div class="form-group text-left">
                 <label for="newKeepTitle">Name</label>
                 <input
-                  v-model="newKeep.name"
+                  v-model="newKeepr.name"
                   type="text"
                   class="form-control"
                   id="newKeepName"
@@ -45,7 +45,7 @@
               <div class="form-group text-left">
                 <label for="newKeepDesc">Keep description</label>
                 <textarea
-                  v-model="newKeep.description"
+                  v-model="newKeepr.description"
                   class="form-control"
                   id="newKeepDesc"
                   placeholder="Share some details about your keep..."
@@ -55,7 +55,7 @@
               <div class="form-group text-left">
                 <label for="newKeepImg">Keep Image</label>
                 <input
-                  v-model="newKeep.img"
+                  v-model="newKeepr.img"
                   type="text"
                   class="form-control"
                   id="keepImg"
@@ -66,19 +66,19 @@
 
               <div class="custom-control custom-switch text-left mt-3">
                 <input
-                  v-model="newKeep.isPrivate"
+                  v-model="newKeepr.isPrivate"
                   type="checkbox"
                   class="custom-control-input"
                   id="privacySwitch"
                 />
                 <p>Privacy settings:</p>
                 <label
-                  v-if="this.newKeep.isPrivate"
+                  v-if="this.newKeepr.isPrivate"
                   class="custom-control-label"
                   for="privacySwitch"
                 >Private</label>
                 <label
-                  v-else-if="!this.newKeep.isPrivate"
+                  v-else-if="!this.newKeepr.isPrivate"
                   class="custom-control-label"
                   for="privacySwitch"
                 >Public</label>
@@ -100,25 +100,26 @@ export default {
   mounted() {},
   data() {
     return {
-      newKeep: {
+      newKeepr: {
         name: "",
-        authorId: this.$store.state.user._id,
         description: "",
         isPrivate: true,
         img: ""
-      },
-      methods: {
-        addKeep() {
-          $("#newKeepForm").modal("hide");
-          let keep = { ...this.newKeep };
-          this.$store.dispatch("addKeep", keep);
-          this.newKeep.name = "";
-          this.newKeep.description = "";
-          this.newKeep.isPrivate = true;
-          this.newKeep.img = "";
-        }
       }
     };
+  },
+  methods: {
+    createKeep() {
+      $("#newKeepForm").modal("hide");
+      let keep = { ...this.newKeepr };
+      console.log(keep);
+
+      this.$store.dispatch("addKeep", keep);
+      this.newKeepr.name = "";
+      this.newKeepr.description = "";
+      this.newKeepr.isPrivate = true;
+      this.newKeepr.img = "";
+    }
   }
 };
 </script>

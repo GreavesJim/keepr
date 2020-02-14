@@ -20,7 +20,9 @@ export default new Vuex.Store({
     publicKeeps: [],
     yourKeeps: [],
     user: {},
-    Vaults: []
+    Vaults: [],
+    activeVault: {},
+    VaultKeeps: []
   },
   mutations: {
     setPublicKeeps(state, payload) {
@@ -31,6 +33,9 @@ export default new Vuex.Store({
     },
     addUserKeep(state, payload) {
       state.yourKeeps.push(payload);
+    },
+    addUserVault(state, payload) {
+      state.Vaults.push(payload);
     }
   },
   actions: {
@@ -76,8 +81,45 @@ export default new Vuex.Store({
       dispatch("getYourVaults");
     },
     async addKeep({ commit, dispatch }, keep) {
-      let res = await api.post("keeps");
+      let res = await api.post("keeps", keep);
       commit("addUserKeep", res.data);
+    },
+    async addVault({ commit, dispatch }, vault) {
+      let res = await api.post("vaults", vault);
+      commit("addUserVault", res.data);
+    },
+    async getVaultKeeps({ commit, dispatch }, id) {
+      try {
+        let res = await api.get("vaultkeeps/" + id + "/keeps");
+        console.log(res.data);
+
+        commit("setResource", { name: "VaultKeeps", data: res.data });
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async getVaultbyId({ commit, dispatch }, id) {
+      try {
+        let res = await api.get("vaults/" + id);
+        commit("setResource", { name: "activeVault", data: res.data });
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    // async viewVault({ commit, dispatch }, vaultId) {
+
+    //   router.push({ name: "VaultView", params: { id: vaultId } });
+    // },
+    async addKeeptoVault({ commit, dispatch }, VaultKeep) {
+      try {
+        let res = await api.post("vaultkeeps", {
+          vaultId: VaultKeep.vaultId,
+          keepId: VaultKeep.keepId
+        });
+        commit("setResource", { name: "VaultKeeps", data: res.data });
+      } catch (error) {
+        console.error(error);
+      }
     }
   }
 });
