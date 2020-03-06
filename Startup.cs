@@ -32,28 +32,7 @@ namespace Keepr
     public void ConfigureServices(IServiceCollection services)
     {
       //ADD USER AUTH through JWT
-      services.AddAuthentication(options =>
-      {
-        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-      }).AddJwtBearer(options =>
-      {
-        options.Authority = $"https://{Configuration["Auth0:Domain"]}/";
-        options.Audience = Configuration["Auth0:Audience"];
-      });
-      services.AddCors(options =>
-      {
-        options.AddPolicy("CorsDevPolicy", builder =>
-              {
-                builder
-                          .WithOrigins(new string[]{
-                            "http://localhost:8080"
-                      })
-                          .AllowAnyMethod()
-                          .AllowAnyHeader()
-                          .AllowCredentials();
-              });
-      });
+      ConfigureAuth(services);
 
       services.AddControllers();
 
@@ -67,6 +46,32 @@ namespace Keepr
       services.AddTransient<VaultsRepository>();
       services.AddTransient<VaultKeepsService>();
       services.AddTransient<VaultKeepsRepository>();
+    }
+
+    private void ConfigureAuth(IServiceCollection services)
+    {
+      services.AddAuthentication(options =>
+      {
+        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+      }).AddJwtBearer(options =>
+      {
+        options.Authority = $"https://{Configuration["Auth0:Domain"]}/";
+        options.Audience = Configuration["Auth0:Audience"];
+      });
+      services.AddCors(options =>
+      {
+        options.AddPolicy("CorsDevPolicy", builder =>
+        {
+          builder
+                    .WithOrigins(new string[]{
+                            "http://localhost:8080"
+                })
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials();
+        });
+      });
     }
 
     private IDbConnection CreateDbConnection()

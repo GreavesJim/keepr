@@ -13,6 +13,7 @@ using Microsoft.Extensions.Logging;
 namespace Keepr.Controllers
 {
   [ApiController]
+  [Authorize]
   [Route("api/[controller]")]
   public class VaultKeepsController : ControllerBase
   {
@@ -59,7 +60,6 @@ namespace Keepr.Controllers
     }
 
     [HttpDelete("{vid}/keeps/{kid}")]
-    [Authorize]
     public ActionResult<String> Delete(int vid, int kid)
     {
       try

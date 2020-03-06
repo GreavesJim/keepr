@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 namespace Keepr.Controllers
 {
   [ApiController]
+  [Authorize]
   [Route("api/[controller]")]
   public class KeepsController : ControllerBase
   {
@@ -21,6 +22,7 @@ namespace Keepr.Controllers
       _ks = ks;
     }
     [HttpGet]
+    [AllowAnonymous]
     public ActionResult<IEnumerable<Keep>> Get()
     {
 
@@ -35,7 +37,6 @@ namespace Keepr.Controllers
     }
 
     [HttpGet("users")]
-    [Authorize]
     public ActionResult<IEnumerable<Keep>> GetAllUserKeeps()
     {
 
@@ -57,7 +58,6 @@ namespace Keepr.Controllers
 
     }
     [HttpPost]
-    [Authorize]
     public ActionResult<Keep> Post([FromBody] Keep newKeep)
     {
       try
@@ -71,6 +71,8 @@ namespace Keepr.Controllers
         return BadRequest(e.Message);
       }
     }
+
+    [AllowAnonymous]
     [HttpGet("{id}")]
     public ActionResult<Keep> GetById(int id)
     {
@@ -93,7 +95,6 @@ namespace Keepr.Controllers
 
     }
     [HttpPut("{id}")]
-    [Authorize]
     public ActionResult<Keep> Edit([FromBody] Keep update, int id)
     {
       try
@@ -109,7 +110,6 @@ namespace Keepr.Controllers
       }
     }
     [HttpDelete("{id}")]
-    [Authorize]
     public ActionResult<String> Delete(int id)
     {
       try
